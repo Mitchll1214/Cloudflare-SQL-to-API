@@ -52,7 +52,7 @@ export default defineEventHandler(async (event) => {
     // 获取相关API路由
     const routesResult = await env.DB.prepare(
       `
-      SELECT id, name, path, method, description, crud_operation, is_public
+      SELECT id, name, path, method, description, crud_operation, is_public, params, sql_query
       FROM api_routes
       WHERE source_table_id = ?
       ORDER BY crud_operation
