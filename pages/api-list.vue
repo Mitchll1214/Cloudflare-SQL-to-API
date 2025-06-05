@@ -2,7 +2,11 @@
   <div class="api-list">
     <el-page-header @back="$router.go(-1)" title="返回" :content="'API列表'" />
 
-    <div class="api-content">
+    <div
+      class="api-content"
+      v-loading="loading"
+      element-loading-text="加载API列表中..."
+    >
       <div class="api-actions">
         <el-row :gutter="20" style="width: 100%">
           <el-col :span="16">
@@ -11,6 +15,7 @@
               @click="fetchApiList"
               :icon="Refresh"
               size="small"
+              :loading="loading"
             >
               刷新
             </el-button>
@@ -401,6 +406,8 @@ const detailsVisible = ref(false);
 const selectedApi = ref<any>(null);
 const loadingEditId = ref<number | null>(null);
 const selectedApis = ref<any[]>([]);
+// API列表加载状态
+const loading = ref(false);
 
 // API日志相关
 const logsVisible = ref(false);
@@ -458,6 +465,7 @@ onMounted(() => {
 
 // 获取API列表
 const fetchApiList = async () => {
+  loading.value = true;
   try {
     // 构建请求参数
     const params = new URLSearchParams();
@@ -496,6 +504,8 @@ const fetchApiList = async () => {
     }
   } catch (error: any) {
     ElMessage.error(error.message || "获取API列表失败");
+  } finally {
+    loading.value = false;
   }
 };
 
@@ -896,6 +906,8 @@ const getCrudTagType = (operation: string) => {
 .api-content {
   margin-top: 20px;
   flex: 1;
+  position: relative;
+  min-height: 300px;
 }
 
 .api-actions {
@@ -1008,5 +1020,16 @@ const getCrudTagType = (operation: string) => {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+/* 自定义加载动画样式 */
+:deep(.el-loading-mask) {
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+:deep(.el-loading-spinner .el-loading-text) {
+  color: #409eff;
+  margin-top: 10px;
+  font-size: 14px;
 }
 </style>
