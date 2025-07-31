@@ -21,9 +21,9 @@
   "d1_databases": [
     {
       "binding": "DB",
-      "database_name": "sql_api_db",
-      "database_id": "3ad66142-4649-4deb-86c8-f04d4a6d5702",
-      "migrations_table": "d1_migrations",
+      "database_name": "sql-d1-api",
+      "database_id": "5d693369-c2d3-47fd-bf6a-7d743fdcdcaf",
+      "migrations_table": "jy_work_api",
       "migrations_dir": "./migrations"
     }
   ]
